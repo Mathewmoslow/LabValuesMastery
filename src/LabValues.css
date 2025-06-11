@@ -1,0 +1,343 @@
+/* LabValues.css */
+
+/* Container Styles */
+.game-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #1e3a8a, #581c87, #831843);
+  padding: 32px;
+}
+
+.quiz-container {
+  min-height: 100vh;
+  background: linear-gradient(to bottom right, #312e81, #581c87, #831843);
+  padding: 32px;
+}
+
+.menu-container {
+  max-width: 1152px;
+  margin: 0 auto;
+}
+
+/* Typography */
+.game-title {
+  font-size: 60px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 16px;
+  animation: pulse 2s ease-in-out infinite;
+}
+
+.game-subtitle {
+  font-size: 20px;
+  color: #e5e7eb;
+}
+
+.section-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 8px;
+}
+
+/* Grid Layout */
+.categories-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+  margin-bottom: 32px;
+}
+
+/* Category Buttons */
+.category-button {
+  padding: 32px;
+  border-radius: 16px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: scale(1);
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.category-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+.category-metabolic {
+  background: linear-gradient(to right, #a855f7, #ec4899);
+}
+
+.category-blood {
+  background: linear-gradient(to right, #ef4444, #ec4899);
+}
+
+.category-bleeding {
+  background: linear-gradient(to right, #f97316, #ef4444);
+}
+
+.category-urine {
+  background: linear-gradient(to right, #3b82f6, #06b6d4);
+}
+
+/* Icons */
+.category-icon {
+  width: 32px;
+  height: 32px;
+  margin: 0 auto 16px;
+  display: block;
+  color: white;
+}
+
+/* Start Button */
+.start-button {
+  background: linear-gradient(to right, #10b981, #059669);
+  color: white;
+  padding: 24px 48px;
+  border-radius: 9999px;
+  font-size: 24px;
+  font-weight: bold;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  transform: scale(1);
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  animation: bounce 1s ease-in-out infinite;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.start-button:hover {
+  transform: scale(1.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+/* Quiz Header */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  max-width: 896px;
+  margin: 0 auto 32px;
+}
+
+.back-button {
+  color: white;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  transition: color 0.2s;
+}
+
+.back-button:hover {
+  color: #d1d5db;
+}
+
+.score-display {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  color: white;
+  font-size: 20px;
+}
+
+.score-display .score {
+  font-weight: bold;
+}
+
+.score-display .streak {
+  font-weight: bold;
+  color: #fbbf24;
+}
+
+/* Question Card */
+.question-card {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 24px;
+  padding: 32px;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  max-width: 896px;
+  margin: 0 auto;
+}
+
+.question-icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  margin-bottom: 16px;
+}
+
+.question-text {
+  font-size: 30px;
+  font-weight: bold;
+  color: white;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+/* Options Grid */
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.option-button {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 24px;
+  border-radius: 12px;
+  font-size: 20px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+.option-button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.option-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Identify Buttons */
+.identify-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 32px;
+  margin-top: 32px;
+}
+
+.normal-button {
+  background: rgba(34, 197, 94, 0.3);
+  color: white;
+  padding: 24px 48px;
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.normal-button:hover:not(:disabled) {
+  background: rgba(34, 197, 94, 0.5);
+  transform: scale(1.05);
+}
+
+.abnormal-button {
+  background: rgba(239, 68, 68, 0.3);
+  color: white;
+  padding: 24px 48px;
+  border-radius: 12px;
+  font-size: 24px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.abnormal-button:hover:not(:disabled) {
+  background: rgba(239, 68, 68, 0.5);
+  transform: scale(1.05);
+}
+
+/* Feedback Box */
+.feedback-box {
+  margin-top: 32px;
+  padding: 24px;
+  border-radius: 12px;
+  text-align: center;
+  color: white;
+  font-size: 20px;
+  font-weight: 600;
+  animation: slideUp 0.5s ease-out;
+}
+
+.feedback-correct {
+  background: rgba(34, 197, 94, 0.5);
+}
+
+.feedback-incorrect {
+  background: rgba(239, 68, 68, 0.5);
+}
+
+/* High Score */
+.high-score {
+  display: inline-flex;
+  align-items: center;
+  gap: 16px;
+  color: white;
+}
+
+.high-score-icon {
+  width: 32px;
+  height: 32px;
+  color: #fbbf24;
+}
+
+.high-score-text {
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Utilities */
+.text-center {
+  text-align: center;
+}
+
+.mb-12 {
+  margin-bottom: 48px;
+}
+
+.mb-8 {
+  margin-bottom: 32px;
+}
+
+.mt-8 {
+  margin-top: 32px;
+}
+
+/* Animations */
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-10px); }
+  75% { transform: translateX(10px); }
+}
+
+.animate-shake {
+  animation: shake 0.5s ease-in-out;
+}
