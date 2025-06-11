@@ -27,20 +27,26 @@ export const generateAbnormalValue = (range, hasDecimals = true, labValueName = 
     const isHigh = Math.random() > 0.5;
     let value;
     if (isHigh) {
-      value = 1.026 + Math.random() * 0.014; // 1.026 to 1.040
+      value = 1.027 + Math.random() * 0.013; // 1.027 to 1.040 (starts above 1.026)
     } else {
-      value = 1.001 + Math.random() * 0.009; // 1.001 to 1.010
+      value = 1.001 + Math.random() * 0.008; // 1.001 to 1.009 (ends below 1.010)
     }
     return value.toFixed(3);
   }
   
   const isHigh = Math.random() > 0.5;
   let value;
+  
   if (isHigh) {
-    value = range.max + Math.random() * range.max * 0.5;
+    // Ensure the value is definitely above the max (add at least 0.1 or 1 depending on decimals)
+    const minOffset = hasDecimals ? 0.1 : 1;
+    value = range.max + minOffset + Math.random() * range.max * 0.5;
   } else {
-    value = Math.max(0, range.min - Math.random() * range.min * 0.5);
+    // Ensure the value is definitely below the min (subtract at least 0.1 or 1 depending on decimals)
+    const minOffset = hasDecimals ? 0.1 : 1;
+    value = Math.max(0, range.min - minOffset - Math.random() * range.min * 0.5);
   }
+  
   return hasDecimals ? value.toFixed(1) : Math.round(value).toString();
 };
 
@@ -114,56 +120,65 @@ export const generateWrongAnswers = (labValue) => {
   return uniqueWrongAnswers.slice(0, 3);
 };
 
+// Shuffle array helper
 export const shuffleArray = (array) => {
-  const shuffled = [...array];
-  for (let i = shuffled.length - 1; i > 0; i--) {
+  const newArray = [...array];
+  for (let i = newArray.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
   }
-  return shuffled;
+  return newArray;
 };
 
-export const playSound = (type, audioContext, soundEnabled) => {
-  if (!soundEnabled || !audioContext) return;
-
-  const ctx = audioContext;
-  const oscillator = ctx.createOscillator();
-  const gainNode = ctx.createGain();
-
+// Sound effects
+export const playSound = (type, audioContext, enabled) => {
+  if (!enabled || !audioContext) return;
+  
+  const oscillator = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
+  
   oscillator.connect(gainNode);
-  gainNode.connect(ctx.destination);
-
-  switch (type) {
+  gainNode.connect(audioContext.destination);
+  
+  switch(type) {
     case 'correct':
-      oscillator.frequency.setValueAtTime(523.25, ctx.currentTime);
-      oscillator.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1);
-      oscillator.frequency.setValueAtTime(783.99, ctx.currentTime + 0.2);
-      gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.5);
+      oscillator.frequency.setValueAtTime(523, audioContext.currentTime); // C5
+      oscillator.frequency.setValueAtTime(659, audioContext.currentTime + 0.1); // E5
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.3);
       break;
+      
     case 'incorrect':
-      oscillator.frequency.setValueAtTime(293.66, ctx.currentTime);
-      oscillator.frequency.setValueAtTime(277.18, ctx.currentTime + 0.1);
-      gainNode.gain.setValueAtTime(0.3, ctx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+      oscillator.frequency.setValueAtTime(220, audioContext.currentTime); // A3
+      oscillator.frequency.setValueAtTime(165, audioContext.currentTime + 0.1); // E3
+      gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.3);
       break;
+      
     case 'click':
-      oscillator.frequency.setValueAtTime(1000, ctx.currentTime);
-      gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.05);
+      oscillator.frequency.setValueAtTime(1000, audioContext.currentTime);
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.05);
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.05);
       break;
+      
     case 'achievement':
-      oscillator.frequency.setValueAtTime(523.25, ctx.currentTime);
-      oscillator.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1);
-      oscillator.frequency.setValueAtTime(783.99, ctx.currentTime + 0.2);
-      oscillator.frequency.setValueAtTime(1046.50, ctx.currentTime + 0.3);
-      gainNode.gain.setValueAtTime(0.4, ctx.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.8);
-      break;
-    default:
+      [523, 659, 784, 1047].forEach((freq, i) => {
+        const osc = audioContext.createOscillator();
+        const gain = audioContext.createGain();
+        osc.connect(gain);
+        gain.connect(audioContext.destination);
+        osc.frequency.setValueAtTime(freq, audioContext.currentTime + i * 0.1);
+        gain.gain.setValueAtTime(0.2, audioContext.currentTime + i * 0.1);
+        gain.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + i * 0.1 + 0.3);
+        osc.start(audioContext.currentTime + i * 0.1);
+        osc.stop(audioContext.currentTime + i * 0.1 + 0.3);
+      });
       break;
   }
-
-  oscillator.start(ctx.currentTime);
-  oscillator.stop(ctx.currentTime + 0.8);
 };

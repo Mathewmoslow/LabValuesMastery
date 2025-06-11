@@ -36,6 +36,14 @@ const LabValuesGame = () => {
     };
   }, []);
 
+  // Check if a value is within the normal range (inclusive)
+  const isValueNormal = (value, normalRange) => {
+    const range = parseRange(normalRange);
+    const numValue = parseFloat(value);
+    // Use inclusive comparison (>= and <=)
+    return numValue >= range.min && numValue <= range.max;
+  };
+
   // Generate quiz question
   const generateQuestion = () => {
     const categories = Object.keys(labValues);
@@ -62,14 +70,19 @@ const LabValuesGame = () => {
     } else {
       const normalRange = parseRange(randomValue.normal);
       const hasDecimals = randomValue.normal.includes('.');
-      const isNormal = Math.random() > 0.5;
+      
+      // Randomly decide whether to generate a normal or abnormal value
+      const shouldGenerateNormal = Math.random() > 0.5;
       let testValue;
 
-      if (isNormal) {
+      if (shouldGenerateNormal) {
         testValue = generateNormalValue(normalRange, hasDecimals, randomValue.name);
       } else {
         testValue = generateAbnormalValue(normalRange, hasDecimals, randomValue.name);
       }
+
+      // Actually check if the generated value is within the normal range
+      const isNormal = isValueNormal(testValue, randomValue.normal);
 
       return {
         type: 'identify',
@@ -78,7 +91,7 @@ const LabValuesGame = () => {
         question: `Is ${randomValue.name} = ${testValue} ${randomValue.unit} normal?`,
         testValue,
         normalRange: randomValue.normal,
-        correct: isNormal
+        correct: isNormal // This is now based on the actual check, not the pre-decision
       };
     }
   };
