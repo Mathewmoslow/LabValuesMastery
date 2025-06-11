@@ -1,14 +1,15 @@
 // QuizComponent.js
 
 import React from 'react';
-import { Brain, Heart, Activity, Droplet, Volume2, VolumeX, CheckCircle, XCircle } from 'lucide-react';
+import { Brain, Heart, Activity, Droplet, Volume2, VolumeX, CheckCircle, XCircle, Link } from 'lucide-react';
 import { labValues } from './labValuesData';
 
 const iconMap = {
   Brain: Brain,
   Heart: Heart,
   Activity: Activity,
-  Droplet: Droplet
+  Droplet: Droplet,
+  Link: Link
 };
 
 const QuizComponent = ({ 
@@ -24,7 +25,9 @@ const QuizComponent = ({
 }) => {
   if (!currentQuestion) return null;
 
-  const IconComponent = iconMap[labValues[currentQuestion.category].icon];
+  const IconComponent = currentQuestion.type === 'relationship' 
+    ? Link 
+    : iconMap[labValues[currentQuestion.category].icon];
 
   return (
     <div className={`quiz-container ${animations.shake ? 'animate-shake' : ''}`}>
@@ -73,7 +76,7 @@ const QuizComponent = ({
               </button>
             ))}
           </div>
-        ) : (
+        ) : currentQuestion.type === 'identify' ? (
           <div className="identify-buttons">
             <button
               onClick={() => handleAnswer(true)}
@@ -90,6 +93,25 @@ const QuizComponent = ({
             >
               <XCircle style={{ width: '32px', height: '32px' }} />
               Abnormal
+            </button>
+          </div>
+        ) : (
+          <div className="identify-buttons">
+            <button
+              onClick={() => handleAnswer(true)}
+              disabled={feedback !== null}
+              className="normal-button"
+            >
+              <CheckCircle style={{ width: '32px', height: '32px' }} />
+              True
+            </button>
+            <button
+              onClick={() => handleAnswer(false)}
+              disabled={feedback !== null}
+              className="abnormal-button"
+            >
+              <XCircle style={{ width: '32px', height: '32px' }} />
+              False
             </button>
           </div>
         )}
