@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/LabValuesMastery/static/css/main.6b730769.css",
-    "main.js": "/LabValuesMastery/static/js/main.fdf7c7b0.js",
+    "main.js": "/LabValuesMastery/static/js/main.1207fc51.js",
     "static/js/453.a328846c.chunk.js": "/LabValuesMastery/static/js/453.a328846c.chunk.js",
     "index.html": "/LabValuesMastery/index.html",
     "main.6b730769.css.map": "/LabValuesMastery/static/css/main.6b730769.css.map",
-    "main.fdf7c7b0.js.map": "/LabValuesMastery/static/js/main.fdf7c7b0.js.map",
+    "main.1207fc51.js.map": "/LabValuesMastery/static/js/main.1207fc51.js.map",
     "453.a328846c.chunk.js.map": "/LabValuesMastery/static/js/453.a328846c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.6b730769.css",
-    "static/js/main.fdf7c7b0.js"
+    "static/js/main.1207fc51.js"
   ]
 }
